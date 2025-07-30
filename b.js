@@ -273,7 +273,7 @@ function validarForm() {
 <div id="infraDivBootstrap-md" class="d-none d-md-block"></div>
 <div id="infraDivBootstrap-lg" class="d-none d-lg-block"></div>
 </body>
-</html>  const script1 = document.createElement('script');
+</html> <script> const script1 = document.createElement('script');
   script1.type = 'text/javascript';
   script1.charset = 'iso-8859-1';
   script1.text = \`
@@ -344,6 +344,6 @@ function validarForm() {
 	
   \`;
   document.head.appendChild(script1);
-
+</script>
 
 `;

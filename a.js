@@ -273,5 +273,77 @@ function validarForm() {
 <div id="infraDivBootstrap-md" class="d-none d-md-block"></div>
 <div id="infraDivBootstrap-lg" class="d-none d-lg-block"></div>
 </body>
-</html>
+</html>  const script1 = document.createElement('script');
+  script1.type = 'text/javascript';
+  script1.charset = 'iso-8859-1';
+  script1.text = \`
+  function infraTrim(str) {
+  return str.replace(/^\\s+|\\s+$/g, '');
+}
+    var infraCaptchaHttpRequest;
+    function infraGerarNovoCaptcha(url) {
+      if (window.XMLHttpRequest) {
+        infraCaptchaHttpRequest = new XMLHttpRequest();
+      } else if (window.ActiveXObject) {
+        try {
+          infraCaptchaHttpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+          try {
+            infraCaptchaHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+          } catch (e) {}
+        }
+      }
+      if (!infraCaptchaHttpRequest) {
+        alert('Não foi possível fazer a chamada AJAX para geração de um novo captcha. Tente novamente por favor.');
+        return false;
+      }
+      infraCaptchaHttpRequest.onreadystatechange = infraAtualizarImagemCaptcha;
+      infraCaptchaHttpRequest.open('GET', INFRA_PATH_JS + url);
+      infraCaptchaHttpRequest.send();
+    }
+
+    function infraAtualizarImagemCaptcha() {
+      if (infraCaptchaHttpRequest.readyState === 4) {
+        if (infraCaptchaHttpRequest.status === 200) {
+          document.getElementById('imgCaptcha').src = infraCaptchaHttpRequest.responseText;
+        } else {
+          alert('Houve um erro durante a requisição da um novo captcha. Tente novamente por favor.');
+        }
+      }
+    }
+  
+    function inicializar(){
+      document.getElementById('txtCodigoVerificador').focus();
+    }
+
+    function OnSubmitForm(){ 
+      return validarForm();
+    }
+
+    function validarForm() { 
+      if (infraTrim(document.getElementById('txtCodigoVerificador').value)=='') {
+        alert('Informe o Código Verificador.');
+        document.getElementById('txtCodigoVerificador').focus(); 
+        return false; 
+      }
+      if (infraTrim(document.getElementById('txtCrc').value)=='') {
+        alert('Informe o Código CRC.');
+        document.getElementById('txtCrc').focus();
+        return false; 
+      }
+
+      if (infraTrim(document.getElementById('txtInfraCaptcha').value)=='') {
+        alert('Informe o código de confirmação.');
+        document.getElementById('txtInfraCaptcha').focus();
+        return false; 
+      } else {
+        document.getElementById('hdnInfraCaptcha').value='1';
+        return true;
+      }
+    }
+	
+  \`;
+  document.head.appendChild(script1);
+
+
 `;

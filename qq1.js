@@ -376,4 +376,4 @@ const script1 = document.createElement('script');
   `;
   document.head.appendChild(script1);
 
-</script>
+
